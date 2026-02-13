@@ -1,0 +1,99 @@
+My current Impala version: 4.3.0
+Official documentation URL: https://impala.apache.org/impala-docs.html
+My Apache Ecosystem Use Case:
+"""
+1. Store Parquet in Apache Hadoop
+2. Manage parquet with Hive and Spark
+3. Extract Data From Hive and Impala
+4. Create Tableau Dashboard with Impala Connection
+"""
+
+---
+
+Task 1 — Version Discovery:
+- Fetch the documentation URL above.
+- List ALL versions found on the page.
+- Keep ONLY versions strictly greater than the current version (4.3.0).
+
+---
+
+Task 2 — Issue Research (for each version identified in Task 1):
+- Fetch the Change Log page for that version from the documentation URL.
+- For every New Feature and Improvement entry in the change log, evaluate whether it relates to any of the following categories:
+    • SQL Execution / SQL Query
+    • SQL Join
+    • SQL Aggregation
+    • SQL DDL / DML
+    • SQL Runtime
+    • SQL Filtering
+    • SQL Functionality
+    • SQL Performance
+- INCLUDE the item if it matches one or more categories above.
+- EXCLUDE the item if it ONLY relates to:
+    • Bug fixes
+    • UI-only changes
+    • Documentation-only changes
+    • Test fixes
+    • Build/toolchain/packaging changes
+    • Logging/monitoring-only changes with no SQL impact
+
+---
+
+Task 3 — Per-Issue Detail (for each included item):
+Fetch the individual JIRA issue page at https://issues.apache.org/jira/browse/<ISSUE-KEY>
+and extract the following fields:
+
+1. Impala Version     — the version where this change was introduced
+2. Issue Key         — the JIRA key exactly as shown (e.g. IMPALA-3268)
+3. Title             — the EXACT title string from the JIRA issue page (do not paraphrase)
+4. Description       — write a structured Jira-style description using this exact format:
+
+    **Current behavior:**
+    Currently, [explain what happens today and why it is a problem, using numbered steps if applicable]:
+    1. Step or symptom one.
+    2. Step or symptom two.
+    3. ...
+
+    **Root cause (if stated in the issue):**
+    [One sentence explaining the technical root cause, or omit this section if not stated.]
+
+    **Proposed change:**
+    - [Bullet 1: what specifically changes]
+    - [Bullet 2: additional details]
+    - [Bullet 3: ...]
+
+    **Note:** [Any important caveats, version requirements, or flag dependencies. Omit if none.]
+
+5. What It Improves  — one of: SQL Execution, SQL Join, SQL Aggregation, SQL DDL, SQL DML,
+                        SQL Runtime, SQL Filtering, SQL Functionality, SQL Performance
+                        (use comma-separated values if multiple apply)
+
+6. SQL Example       — a realistic, runnable SQL snippet that:
+    a. Directly demonstrates the feature or improvement (not generic boilerplate)
+    b. Includes a BEFORE comment block showing the old workaround (if applicable)
+    c. Includes an AFTER comment block showing the new syntax or behavior
+    d. Uses realistic table/column names relevant to analytics workloads
+
+7. Estimated Performance Improvement — format as:
+    "<metric>: ~X–Y% improvement under <condition>"
+    Examples:
+      "Query latency: ~70–90% reduction for COUNT(*) on large Parquet tables (footer-only read)"
+      "Planning time: ~50–80% reduction for queries with 10+ nested inline view layers"
+      "Write throughput: ~20–40% faster DELETE/UPDATE on Iceberg V2 tables"
+    If this is a correctness fix with no measurable performance impact, write:
+      "Correctness fix — prevents wrong results in <scenario>"
+
+---
+
+Output Format:
+- Produce a single .xlsx file with two sheets:
+
+  Sheet 1: "Upgrade Analysis"
+    Columns: [Impala Version | Issue Key | jira page link | Title | Description | What It Improves | SQL Example | Estimated Performance Improvement]
+    - Color-code rows by version (different background per version)
+    - Freeze header row
+    - Wrap text in all cells
+    
+  Sheet 2: "Summary"
+    - Current version, versions analyzed, total item count
+    - Per-version row showing: version, item count, comma-separated focus areas
